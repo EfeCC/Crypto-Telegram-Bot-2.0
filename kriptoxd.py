@@ -2,24 +2,24 @@ import asyncio
 import requests
 from telegram import Bot
 
-# Bot token ve chat ID bilgileri
+# Bot token ve chat ID informations
 BOT_TOKEN = "7908853160:AAH9UXA7xw4bjbCW03usgmMjdmyr4bdh3L4"
 CHAT_ID = "1277582834"
 
-# Kripto fiyatını almak için fonksiyon
+# For giving the crypto price
 def get_crypto_price(crypto_id):
     url = f"https://api.coingecko.com/api/v3/simple/price?ids={crypto_id}&vs_currencies=usd"
     response = requests.get(url)
     data = response.json()
     return data[crypto_id]['usd']
 
-# Telegram mesajı göndermek için asenkron fonksiyon
+# For sending telegram message
 async def send_telegram_message(message):
     bot = Bot(token=BOT_TOKEN)
     await bot.send_message(chat_id=CHAT_ID, text=message)
     print("Mesaj gönderildi!")
 
-# Bitcoin fiyatını kontrol etmek ve eşik değerine göre işlem yapmak
+# Checking bitcoin or any crypto and sending messages
 async def monitor_bitcoin_price():
     bitcoin_price = get_crypto_price("bitcoin")
     eth_price = get_crypto_price("ethereum")
@@ -33,12 +33,12 @@ async def monitor_bitcoin_price():
         await send_telegram_message(f"UPDATED BITCOIN PRICE IS: {bitcoin_price}")
         await send_telegram_message(f"UPDATED ETHEREUM PRICE IS: {eth_price}")
 
-# Sürekli kontrol için döngü
+# Loop for constant check
 async def main():
     while True:
         await monitor_bitcoin_price()
         await asyncio.sleep(10)  # 60 saniyede bir kontrol
 
-# Asenkron çalışma
+# Anti-senc running
 if __name__ == "__main__":
     asyncio.run(main())
