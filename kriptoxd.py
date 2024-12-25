@@ -2,11 +2,11 @@ import asyncio
 import requests
 from telegram import Bot
 
-# Bot token ve chat ID informations
+# Bot token and chat ID informations
 BOT_TOKEN = "7908853160:AAH9UXA7xw4bjbCW03usgmMjdmyr4bdh3L4"
 CHAT_ID = "1277582834"
 
-# For giving the crypto price
+# A function to take the crypto price
 def get_crypto_price(crypto_id):
     url = f"https://api.coingecko.com/api/v3/simple/price?ids={crypto_id}&vs_currencies=usd"
     response = requests.get(url)
